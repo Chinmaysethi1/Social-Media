@@ -5,21 +5,42 @@ const DEFAULT_CONTEXT = {
   addPost: () => {},
   deletePost: () => {},
 };
-const PostList = createContext(DEFAULT_CONTEXT);
+export const PostList = createContext(DEFAULT_CONTEXT);
 
 const postListReducer = (currPostList, action) => {
   return currPostList;
 };
 
-const PopstListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(postListReducer, []);
+const PostListProvider = ({ children }) => {
+  const [postList, dispatchPostList] = useReducer(
+    postListReducer,
+    default_post_list,
+  );
   const addPost = () => {};
   const deletePost = () => {};
 
   return (
-    <PopstListProvider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider value={{ postList, addPost, deletePost }}>
       {children}
-    </PopstListProvider>
+    </PostList.Provider>
   );
 };
-export default PopstListProvider;
+const default_post_list = [
+  {
+    id: "1",
+    title: "Go to Bangalore",
+    body: "Hi guys Im going to Bangalore in my vaccation peace out!!",
+    reactions: 2,
+    userId: "user-1",
+    tags: ["vaccation", "Bangalore", "Enjoying"],
+  },
+  {
+    id: "2",
+    title: "Pass Btech",
+    body: " 4 saal ke baad ke masti mein bhio pass ",
+    reactions: 15,
+    userId: "user-23",
+    tags: ["graduatinng", "unbeleivable", "Enjoying"],
+  },
+];
+export default PostListProvider;
