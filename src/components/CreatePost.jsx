@@ -7,7 +7,7 @@ const Creataposts = () => {
   const postTileElement = useRef();
   const postBodyElement = useRef();
   const reactionsElement = useRef();
-  const tags = useRef();
+  const tagsElement = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -15,7 +15,14 @@ const Creataposts = () => {
     const postTitle = postTileElement.current.value;
     const postBody = postBodyElement.current.value;
     const reactions = reactionsElement.current.value;
-    const tags = tagsElement.current.value.split(/(s+)/);
+    const tags = tagsElement.current.value.split(" ");
+
+    userIdElement.current.value = "";
+    postTileElement.current.value = "";
+    postBodyElement.current.value = "";
+    reactionsElement.current.value = "";
+    tagsElement.current.value = "";
+
     addPost(userId, postTitle, postBody, reactions, tags);
   };
 
