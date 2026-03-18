@@ -1,21 +1,33 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { PostList } from "../store/post-list-store";
 
 const Creataposts = () => {
-  const userId = useRef();
-  const postTile = useRef();
-  const postBody = useRef();
-  const reactions = useRef();
+  const { addPost } = useContext(PostList);
+  const userIdElement = useRef();
+  const postTileElement = useRef();
+  const postBodyElement = useRef();
+  const reactionsElement = useRef();
   const tags = useRef();
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const userId = userIdElement.current.value;
+    const postTitle = postTileElement.current.value;
+    const postBody = postBodyElement.current.value;
+    const reactions = reactionsElement.current.value;
+    const tags = tagsElement.current.value.split(/(s+)/);
+    addPost(userId, postTitle, postBody, reactions, tags);
+  };
+
   return (
-    <form className="create-post">
+    <form className="create-post" onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="USerId" className="form-label">
           Enter Your user id here:
         </label>
         <input
           type="text"
-          ref={userId}
+          ref={userIdElement}
           className="form-control"
           id="USerId"
           placeholder="Your USsr name"
@@ -27,7 +39,7 @@ const Creataposts = () => {
         </label>
         <input
           type="text"
-          ref={postTile}
+          ref={postTileElement}
           className="form-control"
           id="title"
           placeholder="How are you feeling today!!"
@@ -40,11 +52,11 @@ const Creataposts = () => {
         <textarea
           type="text"
           rows="5"
-          ref={postBody}
+          ref={postBodyElement}
           className="form-control"
           id="body"
           placeholder="Tell us more about you!!"
-        />
+        ></textarea>
       </div>
       <div className="mb-3">
         <label htmlFor="reactions" className="form-label">
@@ -52,7 +64,7 @@ const Creataposts = () => {
         </label>
         <input
           type="text"
-          ref={reactions}
+          ref={reactionsElement}
           className="form-control"
           id="reaction"
           placeholder="How many people reacted!"
@@ -60,11 +72,11 @@ const Creataposts = () => {
       </div>
       <div className="mb-3">
         <label htmlFor="tags" className="form-label">
-          Ennnter your hashtags:
+          Enter your hashtags:
         </label>
         <input
           type="text"
-          ref={tags}
+          ref={tagsElement}
           className="form-control"
           id="tags"
           placeholder="Please enter the tags using space "
