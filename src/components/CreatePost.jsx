@@ -37,7 +37,7 @@ const Creataposts = () => {
           ref={userIdElement}
           className="form-control"
           id="USerId"
-          placeholder="Your USsr name"
+          placeholder="Your user name"
         />
       </div>
       <div className="mb-3">
