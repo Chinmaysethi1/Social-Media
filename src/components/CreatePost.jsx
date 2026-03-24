@@ -1,8 +1,10 @@
 import { useContext, useRef } from "react";
 import { PostList } from "../store/post-list-store";
+import { useNavigate } from "react-router-dom";
 
 const Creataposts = () => {
   const { addPost } = useContext(PostList);
+  const navigate = useNavigate();
   const userIdElement = useRef();
   const postTileElement = useRef();
   const postBodyElement = useRef();
@@ -23,9 +25,24 @@ const Creataposts = () => {
     reactionsElement.current.value = "";
     tagsElement.current.value = "";
 
-    addPost(userId, postTitle, postBody, reactions, tags);
-  };
+    fetch("https://dummyjson.com/posts/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: postTitle,
+        body: postBody,
+        reactions: { likes: Number(reactions), dislikes: 0 },
+        userId: userId,
+        tags: tags,
+      }),
+    })
+      .then((res) => res.json())
+      .then((post) => {
+        addPost(post);
 
+        navigate("/");
+      });
+  };
   return (
     <form className="create-post" onSubmit={handleSubmit}>
       <div className="mb-3">
@@ -70,7 +87,7 @@ const Creataposts = () => {
           Number of reactions:
         </label>
         <input
-          type="text"
+          type="number"
           ref={reactionsElement}
           className="form-control"
           id="reaction"
@@ -96,5 +113,4 @@ const Creataposts = () => {
     </form>
   );
 };
-
 export default Creataposts;

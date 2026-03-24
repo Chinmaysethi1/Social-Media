@@ -1,6 +1,9 @@
 .app-container {
   display: flex;
 }
+.header {
+  width: 100vw;
+}
 .Conntent {
   width: 100%;
 }
